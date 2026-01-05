@@ -1,5 +1,5 @@
-; ((comment) @content
-;   (#set! language "comment"))
+((comment) @content
+  (#set! language "comment"))
 
 ; ((comment) @language
 ;   . ; this is to make sure only adjacent comments are accounted for the injections
