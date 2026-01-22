@@ -1,7 +1,25 @@
 {
   "languages": {
     "Nix": {
-      "hard_tabs": false
-    }
-  }
+      "language_servers": ["nixd", "!nil", "!codebook", "..."],
+      "hard_tabs": false,
+    },
+  },
+  "lsp": {
+    "nixd": {
+      "settings": {
+        "nixpkgs": {
+          "expr": "(import ./nixd.nix).nixpkgs",
+        },
+        "options": {
+          "flake-parts": {
+            "expr": "(import ./nixd.nix).debug.options",
+          },
+          "flake-parts-per-system": {
+            "expr": "(import ./nixd.nix).currentSystem.options",
+          },
+        },
+      },
+    },
+  },
 }

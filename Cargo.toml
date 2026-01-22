@@ -1,5 +1,6 @@
 [package]
 name = "nix"
+description = "Nix language support for Zed"
 version = "0.1.3"
 publish = false
 edition = "2021"

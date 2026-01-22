@@ -2,3 +2,6 @@
 /target
 *.wasm
 grammars/
+/result
+.direnv
+.pre-commit-config.yaml
