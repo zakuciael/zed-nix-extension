@@ -37,6 +37,14 @@
       url = "github:oxalica/rust-overlay";
     };
     systems.url = "github:nix-systems/default";
+    zed-extensions = {
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-unstable.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
+      url = "github:DuskSystems/nix-zed-extensions";
+    };
   };
 
 }

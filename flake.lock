@@ -155,7 +155,8 @@
           "nixpkgs"
         ],
         "rust-overlay": "rust-overlay",
-        "systems": "systems"
+        "systems": "systems",
+        "zed-extensions": "zed-extensions"
       }
     },
     "rust-overlay": {
@@ -190,6 +191,32 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "zed-extensions": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-unstable": [
+          "nixpkgs"
+        ],
+        "rust-overlay": [
+          "rust-overlay"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769053046,
+        "narHash": "sha256-SPw2/0WdXaYOdUa2JgSr7Dsv0Ez9QU3Kkzx69O0Vv9g=",
+        "owner": "DuskSystems",
+        "repo": "nix-zed-extensions",
+        "rev": "d6af5cffaa63a5cb97bfc0ba20c4089e8253c5cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DuskSystems",
+        "repo": "nix-zed-extensions",
         "type": "github"
       }
     }
