@@ -1,0 +1,21 @@
+[package]
+name = "statix-ls"
+version = "0.1.4"
+edition = "2021"
+description = "LSP wrapper server for the statix Nix linter"
+repository = "https://github.com/zed-extensions/nix"
+
+[[bin]]
+name = "statix-ls"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = [
+  "io-std",
+  "macros",
+  "process",
+  "rt-multi-thread",
+], default-features = false }
+tower-lsp = "0.20.0"
+url = "2"
