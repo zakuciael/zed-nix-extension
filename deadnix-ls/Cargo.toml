@@ -1,6 +1,6 @@
 [package]
 name = "deadnix-ls"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 description = "LSP wrapper server for the deadnix Nix linter"
 repository = "https://github.com/zed-extensions/nix"
