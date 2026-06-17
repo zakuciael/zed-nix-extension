@@ -37,8 +37,15 @@
             packages =
               let
                 inherit (lib) importTOML;
-                inherit (pkgs) fetchFromGitHub buildZedRustExtension buildZedGrammar;
+                inherit (pkgs)
+                  fetchFromGitHub
+                  buildZedRustExtension
+                  buildZedGrammar
+                  rustPlatform
+                  ;
                 extensionToml = importTOML (self + "/extension.toml");
+                statixLsToml = importTOML (self + "/statix-ls/Cargo.toml");
+                deadnixLsToml = importTOML (self + "/deadnix-ls/Cargo.toml");
 
                 grammar = extensionToml.grammars.nix;
 
@@ -75,6 +82,40 @@
 
                   grammars = [
                     self'.packages.zed-nix-grammar
+                  ];
+                };
+
+                statix-ls = rustPlatform.buildRustPackage {
+                  pname = "statix-ls";
+                  inherit (statixLsToml.package) version;
+
+                  src = self;
+                  cargoLock.lockFile = self + "/Cargo.lock";
+
+                  cargoBuildFlags = [
+                    "-p"
+                    "statix-ls"
+                  ];
+                  cargoTestFlags = [
+                    "-p"
+                    "statix-ls"
+                  ];
+                };
+
+                deadnix-ls = rustPlatform.buildRustPackage {
+                  pname = "deadnix-ls";
+                  inherit (deadnixLsToml.package) version;
+
+                  src = self;
+                  cargoLock.lockFile = self + "/Cargo.lock";
+
+                  cargoBuildFlags = [
+                    "-p"
+                    "deadnix-ls"
+                  ];
+                  cargoTestFlags = [
+                    "-p"
+                    "deadnix-ls"
                   ];
                 };
               };
