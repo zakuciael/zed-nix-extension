@@ -17,3 +17,11 @@ language = "Nix"
 [language_servers.nixd]
 name = "nixd"
 language = "Nix"
+
+[language_servers.statix]
+name = "statix"
+language = "Nix"
+
+[language_servers.deadnix]
+name = "deadnix"
+language = "Nix"

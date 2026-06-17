@@ -2,11 +2,13 @@ mod language_servers;
 
 use zed_extension_api::{self as zed, serde_json, settings::LspSettings, LanguageServerId, Result};
 
-use crate::language_servers::{Nil, Nixd};
+use crate::language_servers::{DeadnixLsp, Nil, Nixd, StatixLsp};
 
 struct NixExtension {
     nil: Option<Nil>,
     nixd: Option<Nixd>,
+    statix: Option<StatixLsp>,
+    deadnix: Option<DeadnixLsp>,
 }
 
 impl zed::Extension for NixExtension {
@@ -14,6 +16,8 @@ impl zed::Extension for NixExtension {
         Self {
             nil: None,
             nixd: None,
+            statix: None,
+            deadnix: None,
         }
     }
 
@@ -30,6 +34,14 @@ impl zed::Extension for NixExtension {
             Nixd::LANGUAGE_SERVER_ID => {
                 let nixd = self.nixd.get_or_insert_with(Nixd::new);
                 nixd.language_server_command(language_server_id, worktree)
+            }
+            StatixLsp::LANGUAGE_SERVER_ID => {
+                let statix = self.statix.get_or_insert_with(StatixLsp::new);
+                statix.language_server_command(language_server_id, worktree)
+            }
+            DeadnixLsp::LANGUAGE_SERVER_ID => {
+                let deadnix = self.deadnix.get_or_insert_with(DeadnixLsp::new);
+                deadnix.language_server_command(language_server_id, worktree)
             }
             language_server_id => Err(format!("unknown language server: {language_server_id}")),
         }

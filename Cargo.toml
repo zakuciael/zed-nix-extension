@@ -1,3 +1,6 @@
+[workspace]
+members = ["statix-ls", "deadnix-ls"]
+
 [package]
 name = "nix"
 version = "0.1.4"
