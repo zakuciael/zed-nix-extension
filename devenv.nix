@@ -3,6 +3,48 @@
   config,
   ...
 }:
+let
+  rustWorkspace =
+    let
+      inherit (config.languages.rust) toolchainPackage;
+
+      crate2nix = config.lib.getInput {
+        name = "crate2nix";
+        url = "github:nix-community/crate2nix";
+        attribute = "languages.rust.import";
+        follows = [ "nixpkgs" ];
+      };
+
+      crate2nixTools = pkgs.callPackage "${crate2nix}/tools.nix" { };
+      path = ./.;
+
+      packageName =
+        let
+          cargoToml =
+            if builtins.pathExists (path + "/Cargo.toml") then
+              fromTOML (builtins.readFile (path + "/Cargo.toml"))
+            else
+              { };
+        in
+        cargoToml.package.name or (baseNameOf (toString path));
+
+      cargoNix =
+        pkgs.callPackage
+          (crate2nixTools.generatedCargoNix {
+            name = packageName;
+            src = path;
+          })
+          {
+            buildRustCrateForPkgs =
+              _:
+              pkgs.buildRustCrate.override {
+                rustc = toolchainPackage;
+                cargo = toolchainPackage;
+              };
+          };
+    in
+    cargoNix.workspaceMembers;
+in
 {
   packages = with pkgs; [
     oxfmt
@@ -10,6 +52,9 @@
     statix
     deadnix
     jq
+
+    rustWorkspace."statix-ls".build
+    rustWorkspace."deadnix-ls".build
   ];
 
   claude.code = {
